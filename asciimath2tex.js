@@ -1,8 +1,9 @@
 export default class AsciiMathParser {
-    constructor() {
+    constructor(customConstants) {
         this.decimalsign = '\\.';
 
         this.setup_symbols();
+        this.append_symbols(customConstants);
         this.sort_symbols();
     }
 
@@ -159,6 +160,7 @@ export default class AsciiMathParser {
             {"asciimath":"uu","tex":"\\cup"},
             {"asciimath":"TT","tex":"\\top"},
             {"asciimath":"+-","tex":"\\pm"},
+            {"asciimath": '-+', "tex": '\\mp'},
             {"asciimath":"O/","tex":"\\emptyset"},
             {"asciimath":"oo","tex":"\\infty"},
             {"asciimath":":.","tex":"\\therefore"},
@@ -333,6 +335,19 @@ export default class AsciiMathParser {
         
         this.non_constant_symbols = ['_','^','/'];
         
+    }
+
+    append_symbols(symbols) {
+        try {
+            for (let symbol of symbols) {
+                if (symbol.tex !== undefined && symbol.asciimath !== undefined) {
+                    this.constants.push(symbol)
+                }
+            }
+        }catch{
+            // symbols are not compatible
+            console.warn("cannot add constants from ", symbols)
+        }
     }
 
     sort_symbols() {

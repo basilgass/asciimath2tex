@@ -76,7 +76,9 @@ class FXParser extends AsciiMathParser {
 }
 window.FXParser = FXParser;
 
-const p = new AsciiMathParser();
+const p = new AsciiMathParser([
+    {asciimath: '-+', tex: '\\mp'}
+]);
 
 const inp = document.getElementById('asciimath');
 const output = document.getElementById('tex');
